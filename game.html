@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Juego de Cartas Imaginativas</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f0f0f0;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .card {
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            padding: 10px;
+            margin: 10px 0;
+            display: flex;
+            align-items: center;
+            background: #fafafa;
+        }
+
+        .card img {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin-right: 10px;
+        }
+
+        .controls {
+            margin-top: 20px;
+        }
+
+        .controls textarea {
+            width: 100%;
+            height: 60px;
+            margin-top: 10px;
+        }
+
+        .intro {
+            margin-bottom: 20px;
+            padding: 15px;
+            background: #e8e0ff;
+            border-left: 6px solid #6c4ccf;
+            border-radius: 6px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Juego de Cartas Imaginativas</h1>
+
+        <div class="intro">
+            <h2>Personaje: Luis - Rey Demonio</h2>
+            <p>Desde los rincones más oscuros del inframundo, surge Luis, el Rey Demonio. Dotado de poderes antiguos y
+                un intelecto imparable, domina el juego con astucia e imaginación. Todo aquel que se cruce en su camino
+                deberá enfrentarse a la oscuridad de sus cartas personalizadas. ¡Bienvenido a su dominio!</p>
+        </div>
+
+        <div id="card-area"></div>
+
+        <div class="controls">
+            <input type="file" accept="image/*" id="image-upload">
+            <textarea id="description" placeholder="Describe tu carta o acción..."></textarea>
+            <button onclick="addCard()">Agregar Carta</button>
+        </div>
+    </div>
+
+    <script>
+        function addCard() {
+            const fileInput = document.getElementById('image-upload');
+            const description = document.getElementById('description').value;
+            const cardArea = document.getElementById('card-area');
+
+            if (!fileInput.files[0]) {
+                alert('Por favor selecciona una imagen.');
+                return;
+            }
+
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                const card = document.createElement('div');
+                card.className = 'card';
+
+                const img = document.createElement('img');
+                img.src = e.target.result;
+
+                const text = document.createElement('div');
+                text.textContent = description;
+
+                card.appendChild(img);
+                card.appendChild(text);
+                cardArea.appendChild(card);
+
+                // Limpiar campos
+                fileInput.value = '';
+                document.getElementById('description').value = '';
+            };
+            reader.readAsDataURL(fileInput.files[0]);
+        }
+    </script>
+</body>
+
+</html>
